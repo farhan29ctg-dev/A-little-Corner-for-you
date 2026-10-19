@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Little Something for You ♡</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0710;color:#fff4fb;font-family:Georgia,serif}
+.screen{display:none;min-height:100vh;padding:35px 20px;max-width:850px;margin:auto}
+.screen.active{display:flex;flex-direction:column;justify-content:center;animation:fade .7s}
+.center{text-align:center;align-items:center}
+h1{font-size:clamp(42px,9vw,78px);font-weight:normal}
+h2{font-size:clamp(30px,6vw,46px);font-weight:normal}
+p{color:#d7c4d2;line-height:1.8;font-size:17px}
+.pink{color:#ff9bcf}
+.eyebrow{color:#ff9bcf;letter-spacing:4px;text-transform:uppercase;font:12px Arial,sans-serif}
+.card{background:#19111e;border:1px solid #5a304e;border-radius:22px;padding:25px;margin:20px 0}
+button{border:0;border-radius:30px;padding:13px 21px;background:#ff9bcf;color:#240e20;font-weight:bold;font-size:15px;cursor:pointer;margin:5px}
+button:disabled{opacity:.35;cursor:not-allowed}
+.secondary{background:transparent;border:1px solid #ff9bcf;color:#ffbce0}
+.actions{text-align:center;margin:20px 0}
+video{width:100%;max-height:65vh;background:#000;border-radius:14px;margin:18px 0}
+input[type=email]{display:block;width:100%;padding:13px;border-radius:10px;background:#100b14;border:1px solid #8c6482;color:white;margin:12px 0}
+.rating{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:22px 0}
+.rating button{width:43px;height:43px;padding:0}
+.rating button.selected{background:white;outline:2px solid #ff9bcf}
+.chapters,.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:20px 0}
+.chapter,.photo{background:#19111e;border:1px solid #5a304e;border-radius:17px;padding:18px}
+.locked{opacity:.45}
+.photo img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px}
+figcaption{text-align:center;color:#ffbce0;padding-top:10px}
+.shayari{border-left:2px solid #ff9bcf;padding:15px 20px;background:#ffffff08;line-height:1.9;margin:16px 0;font-size:19px}
+.small{font:12px/1.6 Arial,sans-serif;color:#bba7b8}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<section id="opening" class="screen active center">
+  <div class="eyebrow">A little something, just for you</div>
+  <h1>For <span class="pink">you</span>,<br>with feeling ♡</h1>
+  <p>Some things are easier to show than to say.<br>So I made you a little place to discover them.</p>
+  <button onclick="go('menu')">Begin our little story</button>
+</section>
+
+<section id="menu" class="screen">
+  <div class="eyebrow">A story in three chapters</div>
+  <h2>Our little chapters ♡</h2>
+  <p>One chapter at a time. Discover what I've made for you.</p>
+  <div class="chapters">
+    <div class="chapter"><div class="eyebrow">Chapter 01</div><h3>The Voice</h3><p>Two videos and one honest rating.</p><button onclick="go('her')">Open chapter</button></div>
+    <div id="c2" class="chapter locked"><div class="eyebrow">Chapter 02</div><h3>The Shayaris</h3><p>Words I saved for you.</p><button id="b2" disabled onclick="go('shayari')">Locked ♡</button></div>
+    <div id="c3" class="chapter locked"><div class="eyebrow">Chapter 03</div><h3>Your Pictures, But My Gallery</h3><p>Little moments, kept close.</p><button id="b3" disabled onclick="go('gallery')">Locked ♡</button></div>
+  </div>
+  <p class="small">Your chapter progress is saved in this browser.</p>
+</section>
+
+<section id="her" class="screen">
+  <button class="secondary" onclick="go('menu')">← Chapters</button>
+  <div class="card">
+    <div class="eyebrow">Chapter 01 · The Voice</div>
+    <h2>One voice I like… <span class="pink">♡</span></h2>
+    <p>Before you hear mine, here's a little video of you. Take your time.</p>
+    <video controls playsinline preload="metadata">
+      <source src="videos/her-video.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+    <div class="actions"><button onclick="go('singing')">Now, listen to me →</button></div>
+  </div>
+</section>
+
+<section id="singing" class="screen">
+  <button class="secondary" onclick="go('her')">← Back</button>
+  <div class="card">
+    <div class="eyebrow">My turn</div>
+    <h2>And now… my singing.</h2>
+    <p>Be honest with me, okay? I can handle the truth. Probably. ♡</p>
+    <video controls playsinline preload="metadata">
+      <source src="videos/my-singing.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+    <div class="actions"><button onclick="go('rating')">Give me a rating</button></div>
+  </div>
+</section>
+
+<section id="rating" class="screen">
+  <button class="secondary" onclick="go('singing')">← Replay</button>
+  <div class="card">
+    <div class="eyebrow">Be brutally honest</div>
+    <h2>Rate my singing <span class="pink">♡</span></h2>
+    <p>From 1 to 10… how did I do?</p>
+    <div id="ratings" class="rating"></div>
+    <p id="hint" class="small">Choose a number from 1 to 10.</p>
+    <form action="https://formsubmit.co/farhan29.ctg@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="She rated your singing! ♡">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://example.com">
+      <input type="hidden" id="score" name="Singing rating" required>
+      <label for="reply">Her email (optional)</label>
+      <input id="reply" type="email" name="Reply email" placeholder="Email, if you'd like a reply">
+      <p class="small">Your rating will be sent to the website owner's email using FormSubmit.</p>
+      <div class="actions"><button id="send" type="submit" disabled>Send my rating ♡</button></div>
+    </form>
+  </div>
+</section>
+
+<section id="thanks" class="screen center">
+  <div class="eyebrow">Chapter one complete</div>
+  <h1>Thank you for<br><span class="pink">being honest.</span></h1>
+  <p>Sharing this with you means more than you know.</p>
+  <button onclick="unlock(2);go('menu')">Continue to Chapter 2 →</button>
+</section>
+
+<section id="shayari" class="screen">
+  <button class="secondary" onclick="go('menu')">← Chapters</button>
+  <div class="eyebrow">Chapter 02 · The Shayaris</div>
+  <h2>Things I don't always say</h2>
+  <p>Some feelings are easier to hide inside poetry.</p>
+  <div class="shayari">Teri muskurahat se roshan meri shaam ho jaaye,<br>Tu paas ho toh har lamha khaas ho jaaye. ♡</div>
+  <div class="shayari">Kuch baatein lafzon mein kehna aasaan nahi,<br>Kuch log dil ke kareeb hote hain, magar bayaan nahi. ♡</div>
+  <p class="small">These are starter lines. Replace them with your own shayaris whenever you're ready.</p>
+  <h2 class="pink">Little moments of you ♡</h2>
+  <div class="gallery">
+    <figure class="photo"><img src="photos/photo1.jpg" alt="A favourite picture"><figcaption>A little picture, a lot of feelings.</figcaption></figure>
+    <figure class="photo"><img src="photos/photo2.jpg" alt="Another favourite picture"><figcaption>You make ordinary moments special.</figcaption></figure>
+    <figure class="photo"><img src="photos/photo3.jpg" alt="A special memory"><figcaption>One of my favourite views. ♡</figcaption></figure>
+  </div>
+  <div class="actions"><button onclick="unlock(3);go('chapter3intro')">I've read them all ♡</button></div>
+</section>
+
+<section id="chapter3intro" class="screen center">
+  <div class="eyebrow">Chapter two complete</div>
+  <h1>One last<br><span class="pink">little chapter.</span></h1>
+  <p>There's a gallery waiting for you.</p>
+  <button onclick="go('gallery')">Open Chapter 3 →</button>
+</section>
+
+<section id="gallery" class="screen">
+  <button class="secondary" onclick="go('menu')">← Chapters</button>
+  <div class="eyebrow">Chapter 03 · My Gallery</div>
+  <h2>Your Pictures, But My Gallery <span class="pink">♡</span></h2>
+  <p>Every picture is a little moment I wanted to keep close.</p>
+  <div class="gallery">
+    <figure class="photo"><img src="photos/photo1.jpg" alt="Photo memory one"><figcaption>One of my favourite views. ♡</figcaption></figure>
+    <figure class="photo"><img src="photos/photo2.jpg" alt="Photo memory two"><figcaption>A moment worth keeping.</figcaption></figure>
+    <figure class="photo"><img src="photos/photo3.jpg" alt="Photo memory three"><figcaption>Just you, being you. ♡</figcaption></figure>
+    <figure class="photo"><img src="photos/photo4.jpg" alt="Photo memory four"><figcaption>And another reason to smile.</figcaption></figure>
+  </div>
+  <div class="actions"><button onclick="go('final')">One last thing…</button></div>
+</section>
+
+<section id="final" class="screen center">
+  <div class="eyebrow">Just one last thing</div>
+  <h1>You're a little<br><span class="pink">more special</span><br>than you know. ♡</h1>
+  <p>I made this because talking to you makes ordinary days feel different. No pressure, no expectations—just something from me to you.</p>
+  <button onclick="go('menu')">Visit the chapters again</button>
+</section>
+
+<script>
+const ids=['opening','menu','her','singing','rating','thanks','shayari','chapter3intro','gallery','final'];
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+  window.scrollTo(0,0);
+}
+function unlock(n){
+  let current=Number(localStorage.getItem('romanticChapter')||1);
+  if(n>current)localStorage.setItem('romanticChapter',n);
+  refresh();
+}
+function refresh(){
+  let n=Number(localStorage.getItem('romanticChapter')||1);
+  document.getElementById('c2').classList.toggle('locked',n<2);
+  document.getElementById('b2').disabled=n<2;
+  document.getElementById('b2').textContent=n<2?'Locked ♡':'Open chapter';
+  document.getElementById('c3').classList.toggle('locked',n<3);
+  document.getElementById('b3').disabled=n<3;
+  document.getElementById('b3').textContent=n<3?'Locked ♡':'Open chapter';
+}
+let chosen=0;
+const ratingArea=document.getElementById('ratings');
+for(let i=1;i<=10;i++){
+  const b=document.createElement('button');b.type='button';b.textContent=i;
+  b.onclick=()=>{
+    chosen=i;document.getElementById('score').value=i+'/10';
+    document.getElementById('send').disabled=false;
+    document.getElementById('hint').textContent='You chose '+i+'/10. Thank you for being honest! ♡';
+    [...ratingArea.children].forEach((x,j)=>x.classList.toggle('selected',j+1===i));
+  };
+  ratingArea.appendChild(b);
+}
+document.querySelector('#rating form').addEventListener('submit',()=>{
+  if(chosen){unlock(2)}
+});
+refresh();
+</script>
+</body>
+</html>
